@@ -9,19 +9,33 @@ jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
+      # Clean temporary LaTeX files
+      - name: Clean Temporary Files
+        run: rm -f *.aux *.toc *.log *.out
+
+      # Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Compile LaTeX Document - First Run
       - name: Compile LaTeX Document (First Run)
         uses: xu-cheng/latex-action@v2
         with:
           root_file: CW_Final_Assignment.tex
 
+      # Compile LaTeX Document - Second Run
       - name: Compile LaTeX Document (Second Run)
         uses: xu-cheng/latex-action@v2
         with:
           root_file: CW_Final_Assignment.tex
 
+      # Compile LaTeX Document - Third Run (if needed)
+      - name: Compile LaTeX Document (Third Run)
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: CW_Final_Assignment.tex
+
+      # Upload the compiled PDF as an artifact
       - name: Upload Compiled PDF as Artifact
         uses: actions/upload-artifact@v3
         with:
