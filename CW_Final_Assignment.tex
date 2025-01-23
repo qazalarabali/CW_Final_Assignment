@@ -6,6 +6,19 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
+\usepackage{listings} % Added for code highlighting
+
+% Listings settings for YAML
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    captionpos=b,
+    keywordstyle=\color{blue}\bfseries,
+    language=yaml
+}
 
 \setlength{\headheight}{15pt}
 \pagestyle{fancy}
@@ -16,7 +29,7 @@
 
 \title{
     \vspace{2in}
-    \textbf{Final Assignment:}\\
+    \textbf{Final Assignment :}\\
     \textbf{Integration of Tools and Practices}\\
     \large Iran University of Science and Technology\\
     \large Department of Computer Engineering\\
@@ -50,10 +63,8 @@ To initialize the repository and make the first commits, the following steps wer
 
 \begin{enumerate}
     \item Logged into \textbf{GitHub} and created a new repository named :
-    \begin{verbatim}
-    CW_Final_Assignment
-    \end{verbatim}
-
+    \texttt{CW\_Final\_Assignment}
+    
     \item Configured the repository settings :
     \begin{itemize}
         \item Set the repository visibility to \textbf{Public}.
@@ -61,55 +72,50 @@ To initialize the repository and make the first commits, the following steps wer
     \end{itemize}
 
     \item Cloned the repository to the local system using the command :
-    \begin{verbatim}
+    \begin{lstlisting}[caption=Clone Repository]
     git clone https://github.com/username/CW_Final_Assignment
-    \end{verbatim}
+    \end{lstlisting}
 
     \item Navigated to the cloned repository directory :
-    \begin{verbatim}
+    \begin{lstlisting}[caption=Navigate to Directory]
     cd CW_Final_Assignment
-    \end{verbatim}
+    \end{lstlisting}
 
     \item Created a new LaTeX file named \texttt{CW\_Final\_Assignment.tex} with the initial structure.
 
-    \item Staged and committed the new file :
-    \begin{itemize}
-        \item To stage the file:
-        \begin{verbatim}
-        git add CW_Final_Assignment.tex
-        \end{verbatim}
-        \item To commit the changes:
-        \begin{verbatim}
-        git commit -m "Added initial LaTeX file"
-        \end{verbatim}
-    \end{itemize}
+    \item Staged and committed the new file:
+    \begin{lstlisting}[caption=Stage and Commit Changes]
+    git add CW_Final_Assignment.tex
+    git commit -m "Added initial LaTeX file"
+    \end{lstlisting}
 
     \item Pushed the changes to the GitHub repository :
-    \begin{verbatim}
+    \begin{lstlisting}[caption=Push Changes]
     git push
-    \end{verbatim}
+    \end{lstlisting}
 \end{enumerate}
 
-    \subsection{GitHub Actions for LaTeX Compilation}
-    To streamline the process of compiling the LaTeX document and managing different stages of updates, two distinct GitHub Actions workflows were created:
+\subsection{GitHub Actions for LaTeX Compilation}
 
-    \begin{itemize}
-        \item \textbf{Workflow for Intermediate Versions:}
-        This workflow compiles the LaTeX document and uploads the resulting PDF as an \textbf{Artifact}. It is used for minor updates or ongoing progress, ensuring the document is accessible for review without cluttering the Releases section.
+To streamline the process of compiling the LaTeX document and managing different stages of updates, two distinct GitHub Actions workflows were created :
+
+\begin{itemize}
+    \item \textbf{Workflow for Intermediate Versions :}
+    This workflow compiles the LaTeX document and uploads the resulting PDF as an \textbf{Artifact}. It is used for minor updates or ongoing progress, ensuring the document is accessible for review without cluttering the Releases section.
     
-        \item \textbf{Workflow for Major Releases:}
-        This workflow compiles the LaTeX document and publishes the resulting PDF as part of a \textbf{GitHub Release}. It is triggered only for significant updates or finalized versions to provide stable releases for public access.
-    \end{itemize}
+    \item \textbf{Workflow for Major Releases :}
+    This workflow compiles the LaTeX document and publishes the resulting PDF as part of a \textbf{GitHub Release}. It is triggered only for significant updates or finalized versions to provide stable releases for public access.
+\end{itemize}
 
-    \subsubsection{Workflow for Intermediate Versions (Artifact Only)}
+\subsubsection{Workflow for Intermediate Versions (Artifact Only)}
 
 For intermediate updates or minor progress, the LaTeX document is compiled and uploaded as an \textbf{Artifact}. This ensures that ongoing work is accessible for review and testing without cluttering the Releases section.
 
 \begin{enumerate}
-    \item \textbf{Trigger:} This workflow runs on every \texttt{push} to the \texttt{main} branch.
-    \item \textbf{Outcome:} The compiled PDF is stored in the \textbf{Actions > Artifacts} section for download.
-    \item \textbf{Workflow Configuration:}
-    \begin{verbatim}
+    \item \textbf{Trigger :} This workflow runs on every \texttt{push} to the \texttt{main} branch.
+    \item \textbf{Outcome :} The compiled PDF is stored in the \textbf{Actions > Artifacts} section for download.
+    \item \textbf{Workflow Configuration :}
+    \begin{lstlisting}[caption=Workflow for Intermediate Versions]
     name: Compile LaTeX and Upload Artifact
 
     on:
@@ -134,7 +140,7 @@ For intermediate updates or minor progress, the LaTeX document is compiled and u
             with:
               name: CW_Final_Assignment
               path: ./CW_Final_Assignment.pdf
-    \end{verbatim}
+    \end{lstlisting}
 \end{enumerate}
 
 \subsubsection{Workflow for Major Releases}
@@ -142,10 +148,10 @@ For intermediate updates or minor progress, the LaTeX document is compiled and u
 For significant updates or final versions, the LaTeX document is compiled, and the resulting PDF is published as part of a \textbf{GitHub Release}. This approach ensures that only stable and finalized versions are available in the Releases section.
 
 \begin{enumerate}
-    \item \textbf{Trigger:} This workflow runs on every \texttt{push} of a Git tag in the format \texttt{x.x.x} (e.g., \texttt{1.0.0}).
-    \item \textbf{Outcome:} The compiled PDF is attached to a new Release in the \textbf{Releases} section.
-    \item \textbf{Workflow Configuration:}
-    \begin{verbatim}
+    \item \textbf{Trigger :} This workflow runs on every \texttt{push} of a Git tag in the format \texttt{x.x.x} (e.g., \texttt{1.0.0}).
+    \item \textbf{Outcome :} The compiled PDF is attached to a new Release in the \textbf{Releases} section.
+    \item \textbf{Workflow Configuration :}
+    \begin{lstlisting}[caption=Workflow for Major Releases]
     name: Release Compiled PDF
 
     on:
@@ -187,9 +193,8 @@ For significant updates or final versions, the LaTeX document is compiled, and t
               asset_path: ./CW_Final_Assignment.pdf
               asset_name: CW_Final_Assignment.pdf
               asset_content_type: application/pdf
-    \end{verbatim}
+    \end{lstlisting}
 \end{enumerate}
-    
 
 \section{Exploration Tasks}
     \subsection{Vim Advanced Features}
