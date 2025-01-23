@@ -342,7 +342,7 @@ For significant updates or final versions, the LaTeX document is compiled, and t
             Valgrind is a powerful instrumentation framework for building dynamic analysis tools. The most commonly used tool within the Valgrind suite is \textbf{Memcheck}, which helps detect memory-related issues in programs, such as memory leaks, use of uninitialized memory, and accessing invalid memory locations.
             
             \paragraph{Purpose of Valgrind}
-            
+            \newline
             The primary purpose of Valgrind is to ensure memory correctness in programs by :
             \begin{itemize}
                 \item Detecting memory leaks that occur when dynamically allocated memory is not properly freed.
@@ -352,7 +352,7 @@ For significant updates or final versions, the LaTeX document is compiled, and t
             \end{itemize}
             
             \paragraph{How Valgrind Helps with Memory Leaks}
-            
+            \newline
             Valgrind identifies memory leaks by monitoring all dynamic memory allocations and deallocations. At the end of the program's execution, it reports:
             \begin{itemize}
                 \item \textbf{Definite Leaks} : Memory that was allocated but never freed.
@@ -363,7 +363,7 @@ For significant updates or final versions, the LaTeX document is compiled, and t
             Using Valgrind, developers can pinpoint the exact location in the code where memory issues occur, making it easier to fix the problem.
             
             \paragraph{Example Usage of Valgrind}
-            
+            \newline
             Below is an example of how to use Valgrind to detect memory leaks in a C program :
             
             \begin{lstlisting}[language=C]
@@ -377,13 +377,13 @@ For significant updates or final versions, the LaTeX document is compiled, and t
                 return 0;
             }
             \end{lstlisting}
-            
+            \vspace*{2cm}
             To run the program with Valgrind :
             
             \begin{lstlisting}[language=bash]
             valgrind --leak-check=full --track-origins=yes ./my_program
             \end{lstlisting}
-            
+            \vspace*{2cm}
             Example output :
             
             \begin{lstlisting}
@@ -413,6 +413,32 @@ For significant updates or final versions, the LaTeX document is compiled, and t
 
     \subsection{GNU/Linux Bash Scripting}
         \subsubsection{fzf}
+            \textbf{What is fuzzy searching ?}
+
+            Fuzzy searching is a technique used to find approximate matches to a given query string, rather than requiring an exact match. This is particularly useful when the user does not remember the full or exact input, or when there are minor typos. Instead of matching exact characters in the correct sequence, fuzzy searching prioritizes likely matches based on the query and displays them in an interactive interface.
+            
+            \textbf{fzf} (Fuzzy Finder) is a command-line tool that provides an efficient way to perform fuzzy searching. It is highly customizable, interactive, and lightweight. It can be used to search for files, commands, or any list of items in the terminal.
+            
+            \paragraph{Example usage :}
+            \newline
+            Suppose you want to search for a file in a directory. With \texttt{fzf}, you simply type a part of the file name, and it will display all matches dynamically as you type.
+            
+            \begin{lstlisting}[language=bash]
+            # Search for a file
+            fzf
+            
+            # Example : Combining with find command
+            find . -type f | fzf
+            \end{lstlisting}
+            
+            \paragraph{Key Features of fzf :}
+            \begin{itemize}
+                \item Interactive interface that displays results as you type.
+                \item Supports integration with other tools and commands.
+                \item Can be used in combination with pipes for filtering outputs.
+                \item Lightweight and customizable with various options.
+            \end{itemize}
+            
         \subsubsection{Using fzf to find your favorite PDF}
         \subsubsection{Opening the file using Zathura}
 
