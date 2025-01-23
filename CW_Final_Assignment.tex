@@ -84,25 +84,25 @@ To initialize the repository and make the first commits, the following steps wer
     \end{itemize}
 
     \item Cloned the repository to the local system using the command :
-    \begin{lstlisting}[caption=Clone Repository]
+    \begin{lstlisting}
     git clone https://github.com/username/CW_Final_Assignment
     \end{lstlisting}
 
     \item Navigated to the cloned repository directory :
-    \begin{lstlisting}[caption=Navigate to Directory]
+    \begin{lstlisting}
     cd CW_Final_Assignment
     \end{lstlisting}
 
     \item Created a new LaTeX file named \texttt{CW\_Final\_Assignment.tex} with the initial structure.
 
     \item Staged and committed the new file:
-    \begin{lstlisting}[caption=Stage and Commit Changes]
+    \begin{lstlisting}
     git add CW_Final_Assignment.tex
     git commit -m "Added initial LaTeX file"
     \end{lstlisting}
 
     \item Pushed the changes to the GitHub repository :
-    \begin{lstlisting}[caption=Push Changes]
+    \begin{lstlisting}
     git push
     \end{lstlisting}
 \end{enumerate}
@@ -127,7 +127,7 @@ For intermediate updates or minor progress, the LaTeX document is compiled and u
     \item \textbf{Trigger :} This workflow runs on every \texttt{push} to the \texttt{main} branch.
     \item \textbf{Outcome :} The compiled PDF is stored in the \textbf{Actions > Artifacts} section for download.
     \item \textbf{Workflow Configuration :}
-    \begin{lstlisting}[language=yaml, caption=Workflow for Intermediate Versions]
+    \begin{lstlisting}[language=yaml]
         name: Compile LaTeX and Upload Artifact
         
         on:
@@ -164,7 +164,7 @@ For significant updates or final versions, the LaTeX document is compiled, and t
     \item \textbf{Trigger :} This workflow runs on every \texttt{push} of a Git tag in the format \texttt{x.x.x} (e.g., \texttt{1.0.0}).
     \item \textbf{Outcome :} The compiled PDF is attached to a new Release in the \textbf{Releases} section.
     \item \textbf{Workflow Configuration :}
-    \begin{lstlisting}[language=yaml, caption=Workflow for Major Releases]
+    \begin{lstlisting}[language=yaml]
         name: Release Compiled PDF
         
         on:
@@ -212,7 +212,59 @@ For significant updates or final versions, the LaTeX document is compiled, and t
 
 \section{Exploration Tasks}
     \subsection{Vim Advanced Features}
-    
+    Here are three advanced features of Vim that go beyond the topics covered in class :
+
+    \subsubsection*{Registers}
+
+    Registers in Vim allow you to store multiple pieces of text in separate "clipboard" areas and retrieve them as needed. This can enhance productivity when working with multiple text snippets.
+
+    \begin{itemize}
+        \item To copy text to a specific register, use :
+        \begin{lstlisting}
+        "aY  # Copy text to register 'a'.
+        \end{lstlisting}
+        \item To paste text from a specific register, use :
+        \begin{lstlisting}
+        "ap  # Paste text from register 'a'.
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsubsection*{Macros}
+
+    Macros enable you to record and replay a series of commands, making repetitive tasks easier.
+
+    \begin{itemize}
+        \item To start recording a macro :
+        \begin{lstlisting}
+        q{register}  # Start recording to a register (e.g., 'a').
+        \end{lstlisting}
+        \item To stop recording :
+        \begin{lstlisting}
+        q
+        \end{lstlisting}
+        \item To play back the macro :
+        \begin{lstlisting}
+        @{register}  # Play the macro stored in the register.
+        \end{lstlisting}
+    \end{itemize}
+
+    \subsubsection*{Persistent Undo}
+
+    Persistent Undo allows you to keep the undo history of a file even after closing and reopening Vim.
+
+    \begin{itemize}
+        \item To enable persistent undo, add the following to your `.vimrc` :
+        \begin{lstlisting}[language=vim]
+        set undofile
+        set undodir=~/.vim/undodir
+        \end{lstlisting}
+        \item Once enabled, you can navigate the undo history using :
+        \begin{lstlisting}
+        u       # Undo the last change.
+        Ctrl-r  # Redo the last undone change.
+        \end{lstlisting}
+    \end{itemize}
+
     \subsection{Memory profiling}
         \subsubsection{Memory Leak}
         \subsubsection{Memory profilers}
