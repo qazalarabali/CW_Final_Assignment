@@ -43,25 +43,70 @@
 \tableofcontents
 \newpage
 
-\section*{Git and GitHub}
-    \subsection*{Repository Initialization and Commits}
-    \subsection*{GitHub Actions for LaTeX Compilation}
-
-\section*{Exploration Tasks}
-    \subsection*{Vim Advanced Features}
+\section{Git and GitHub}
+    \subsection{Repository Initialization and Commits}
     
-    \subsection*{Memory profiling}
-        \subsubsection*{Memory Leak}
-        \subsubsection*{Memory profilers}
+To initialize the repository and make the first commits, the following steps were taken:
 
-    \subsection*{GNU/Linux Bash Scripting}
-        \subsubsection*{fzf}
-        \subsubsection*{Using fzf to find your favorite PDF}
-        \subsubsection*{Opening the file using Zathura}
+\begin{enumerate}
+    \item Logged into \textbf{GitHub} and created a new repository named:
+    \begin{verbatim}
+    CW_Final_Assignment
+    \end{verbatim}
 
-\section*{Git and FOSS}
-    \subsection*{README.md}
-    \subsection*{Issues}
-    \subsection*{FOSS contribution}
+    \item Configured the repository settings:
+    \begin{itemize}
+        \item Set the repository visibility to \textbf{Public}.
+        \item Checked the box: \texttt{Initialize this repository with a README}.
+    \end{itemize}
+
+    \item Cloned the repository to the local system using the command:
+    \begin{verbatim}
+    git clone https://github.com/username/CW_Final_Assignment
+    \end{verbatim}
+
+    \item Navigated to the cloned repository directory:
+    \begin{verbatim}
+    cd CW_Final_Assignment
+    \end{verbatim}
+
+    \item Created a new LaTeX file named \texttt{CW\_Final\_Assignment.tex} with the initial structure.
+
+    \item Staged and committed the new file:
+    \begin{itemize}
+        \item To stage the file:
+        \begin{verbatim}
+        git add CW_Final_Assignment.tex
+        \end{verbatim}
+        \item To commit the changes:
+        \begin{verbatim}
+        git commit -m "Added initial LaTeX file"
+        \end{verbatim}
+    \end{itemize}
+
+    \item Pushed the changes to the GitHub repository:
+    \begin{verbatim}
+    git push
+    \end{verbatim}
+\end{enumerate}
+
+    \subsection{GitHub Actions for LaTeX Compilation}
+
+\section{Exploration Tasks}
+    \subsection{Vim Advanced Features}
+    
+    \subsection{Memory profiling}
+        \subsubsection{Memory Leak}
+        \subsubsection{Memory profilers}
+
+    \subsection{GNU/Linux Bash Scripting}
+        \subsubsection{fzf}
+        \subsubsection{Using fzf to find your favorite PDF}
+        \subsubsection{Opening the file using Zathura}
+
+\section{Git and FOSS}
+    \subsection{README.md}
+    \subsection{Issues}
+    \subsection{FOSS contribution}
 
 \end{document}

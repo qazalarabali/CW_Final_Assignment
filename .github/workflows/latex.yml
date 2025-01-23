@@ -1,13 +1,12 @@
-name: Release Compiled PDF
+name: Compile LaTeX and Upload Artifact
 
 on:
   push:
-    tags:
-      - '*.*.*'
+    branches:
+      - main
 
 jobs:
   build_latex:
-    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -18,24 +17,8 @@ jobs:
         with:
           root_file: CW_Final_Assignment.tex
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Compiled PDF as Artifact
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload_release_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./CW_Final_Assignment.pdf
-          asset_name: CW_Final_Assignment.pdf
-          asset_content_type: application/pdf
+          name: CW_Final_Assignment
+          path: ./CW_Final_Assignment.pdf
