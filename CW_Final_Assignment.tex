@@ -7,7 +7,19 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{listings} % Added for code highlighting
+\usepackage{xcolor}
 
+\lstdefinelanguage{yaml}{
+    keywords={true, false, null, yes, no},
+    comment=[l]{\#},
+    morestring=[b]',
+    morestring=[b]",
+    stringstyle=\color{red},
+    keywordstyle=\color{blue}\bfseries,
+    identifierstyle=\color{black},
+    commentstyle=\color{green}\itshape,
+    sensitive=false
+}
 % Listings settings for YAML
 \lstset{
     basicstyle=\ttfamily\small,
@@ -115,32 +127,33 @@ For intermediate updates or minor progress, the LaTeX document is compiled and u
     \item \textbf{Trigger :} This workflow runs on every \texttt{push} to the \texttt{main} branch.
     \item \textbf{Outcome :} The compiled PDF is stored in the \textbf{Actions > Artifacts} section for download.
     \item \textbf{Workflow Configuration :}
-    \begin{lstlisting}[caption=Workflow for Intermediate Versions]
-    name: Compile LaTeX and Upload Artifact
-
-    on:
-      push:
-        branches:
-          - main
-
-    jobs:
-      build_latex:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout Repository
-            uses: actions/checkout@v3
-
-          - name: Compile LaTeX Document
-            uses: xu-cheng/latex-action@v2
-            with:
-              root_file: CW_Final_Assignment.tex
-
-          - name: Upload Compiled PDF as Artifact
-            uses: actions/upload-artifact@v3
-            with:
-              name: CW_Final_Assignment
-              path: ./CW_Final_Assignment.pdf
-    \end{lstlisting}
+    \begin{lstlisting}[language=yaml, caption=Workflow for Intermediate Versions]
+        name: Compile LaTeX and Upload Artifact
+        
+        on:
+          push:
+            branches:
+              - main
+        
+        jobs:
+          build_latex:
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout Repository
+                uses: actions/checkout@v3
+        
+              - name: Compile LaTeX Document
+                uses: xu-cheng/latex-action@v2
+                with:
+                  root_file: CW_Final_Assignment.tex
+        
+              - name: Upload Compiled PDF as Artifact
+                uses: actions/upload-artifact@v3
+                with:
+                  name: CW_Final_Assignment
+                  path: ./CW_Final_Assignment.pdf
+        \end{lstlisting}
+        
 \end{enumerate}
 
 \subsubsection{Workflow for Major Releases}
@@ -151,49 +164,50 @@ For significant updates or final versions, the LaTeX document is compiled, and t
     \item \textbf{Trigger :} This workflow runs on every \texttt{push} of a Git tag in the format \texttt{x.x.x} (e.g., \texttt{1.0.0}).
     \item \textbf{Outcome :} The compiled PDF is attached to a new Release in the \textbf{Releases} section.
     \item \textbf{Workflow Configuration :}
-    \begin{lstlisting}[caption=Workflow for Major Releases]
-    name: Release Compiled PDF
-
-    on:
-      push:
-        tags:
-          - '*.*.*'
-
-    jobs:
-      build_latex:
-        permissions: write-all
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout Repository
-            uses: actions/checkout@v3
-
-          - name: Compile LaTeX Document
-            uses: xu-cheng/latex-action@v2
-            with:
-              root_file: CW_Final_Assignment.tex
-
-          - name: Create Release
-            id: create_release
-            uses: actions/create-release@v1
-            env:
-              GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-            with:
-              tag_name: \${{ github.ref }}
-              release_name: Release \${{ github.ref }}
-              draft: false
-              prerelease: false
-
-          - name: Upload Release Asset
-            id: upload_release_asset
-            uses: actions/upload-release-asset@v1
-            env:
-              GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-            with:
-              upload_url: \${{ steps.create_release.outputs.upload_url }}
-              asset_path: ./CW_Final_Assignment.pdf
-              asset_name: CW_Final_Assignment.pdf
-              asset_content_type: application/pdf
+    \begin{lstlisting}[language=yaml, caption=Workflow for Major Releases]
+        name: Release Compiled PDF
+        
+        on:
+          push:
+            tags:
+              - '*.*.*'
+        
+        jobs:
+          build_latex:
+            permissions: write-all
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout Repository
+                uses: actions/checkout@v3
+        
+              - name: Compile LaTeX Document
+                uses: xu-cheng/latex-action@v2
+                with:
+                  root_file: CW_Final_Assignment.tex
+        
+              - name: Create Release
+                id: create_release
+                uses: actions/create-release@v1
+                env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                with:
+                  tag_name: ${{ github.ref }}
+                  release_name: Release ${{ github.ref }}
+                  draft: false
+                  prerelease: false
+        
+              - name: Upload Release Asset
+                id: upload_release_asset
+                uses: actions/upload-release-asset@v1
+                env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: ./CW_Final_Assignment.pdf
+                  asset_name: CW_Final_Assignment.pdf
+                  asset_content_type: application/pdf
     \end{lstlisting}
+        
 \end{enumerate}
 
 \section{Exploration Tasks}
