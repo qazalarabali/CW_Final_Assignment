@@ -25,23 +25,34 @@
     keywords={function, endfunction, if, endif, let, set, call, return, elseif},
     keywordstyle=\color{blue}\bfseries,
     sensitive=true,
-    morecomment=[l]{\"},   % single-line comments
-    morestring=[b]',       % strings in single quotes
-    morestring=[b]"        % strings in double quotes
+    morecomment=[l]{\"},   
+    morestring=[b]',       
+    morestring=[b]"        
+}
+
+\lstdefinelanguage{C}{
+    keywords={int, float, if, else, while, for, return, void, char, malloc, free, sizeof, struct, NULL},
+    keywordstyle=\color{blue}\bfseries,
+    sensitive=true,
+    morecomment=[l]{//},   
+    morecomment=[s]{/*}{*/}, 
+    commentstyle=\color{green}\itshape,
+    morestring=[b]",       
+    morestring=[b]'        
 }
 
 
 \lstset{
-    basicstyle=\ttfamily\footnotesize, % Smaller font for code
-    frame=lines, % Adds a frame around the code
-    backgroundcolor=\color{white}, % Background color for the code block
-    rulecolor=\color{black}, % Border color
-    tabsize=2, % Default tab size
-    showspaces=false, % Do not show spaces in the code
-    showstringspaces=false, % Do not mark spaces in strings
-    showtabs=false, % Do not show tabs
-    breaklines=true, % Break long lines
-    breakatwhitespace=true % Only break lines at white spaces
+    basicstyle=\ttfamily\footnotesize, 
+    frame=lines, 
+    backgroundcolor=\color{white}, 
+    rulecolor=\color{black}, 
+    tabsize=2, 
+    showspaces=false, 
+    showstringspaces=false, 
+    showtabs=false, 
+    breaklines=true, 
+    breakatwhitespace=true 
 }
 
 
@@ -132,7 +143,7 @@ To streamline the process of compiling the LaTeX document and managing different
     This workflow compiles the LaTeX document and publishes the resulting PDF as part of a \textbf{GitHub Release}. It is triggered only for significant updates or finalized versions to provide stable releases for public access.
 \end{itemize}
 
-\subsubsection{Workflow for Intermediate Versions (Artifact Only)}
+\subsubsection*{Workflow for Intermediate Versions (Artifact Only)}
 
 For intermediate updates or minor progress, the LaTeX document is compiled and uploaded as an \textbf{Artifact}. This ensures that ongoing work is accessible for review and testing without cluttering the Releases section.
 
@@ -169,7 +180,7 @@ For intermediate updates or minor progress, the LaTeX document is compiled and u
         
 \end{enumerate}
 
-\subsubsection{Workflow for Major Releases}
+\subsubsection*{Workflow for Major Releases}
 
 For significant updates or final versions, the LaTeX document is compiled, and the resulting PDF is published as part of a \textbf{GitHub Release}. This approach ensures that only stable and finalized versions are available in the Releases section.
 
@@ -280,6 +291,32 @@ For significant updates or final versions, the LaTeX document is compiled, and t
 
     \subsection{Memory profiling}
         \subsubsection{Memory Leak}
+
+            A \textbf{memory leak} occurs when a program allocates memory during its execution but fails to release it after it is no longer needed. Over time, this can lead to increased memory usage and potentially cause the program or the system to run out of memory. Memory leaks typically happen due to :
+
+            \begin{itemize}
+                \item Forgetting to free dynamically allocated memory.
+                \item Retaining references to objects that are no longer needed, preventing their deallocation.
+                \item Errors in pointer management, such as overwriting pointers without freeing the associated memory.
+            \end{itemize}
+            
+            For example, in C programming, a memory leak might look like this :
+            \begin{lstlisting}[language=c]
+            #include <stdlib.h>
+            
+            int main() {
+                int *ptr = (int *)malloc(sizeof(int) * 10); // Memory allocated
+                // Forgot to free the allocated memory
+                return 0; // Memory is leaked here
+            }
+            \end{lstlisting}
+            
+            To prevent memory leaks :
+            \begin{itemize}
+                \item Always release memory using \texttt{free()} in C or \texttt{delete} in C++.
+                \item Use memory profiling tools, such as \textbf{Valgrind}, to identify and fix leaks.
+                \item Adopt good coding practices, such as using smart pointers in modern C++.
+            \end{itemize}
         \subsubsection{Memory profilers}
 
     \subsection{GNU/Linux Bash Scripting}
