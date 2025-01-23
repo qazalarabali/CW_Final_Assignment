@@ -20,17 +20,30 @@
     commentstyle=\color{green}\itshape,
     sensitive=false
 }
-% Listings settings for YAML
-\lstset{
-    basicstyle=\ttfamily\small,
-    breaklines=true,
-    numbers=left,
-    numberstyle=\tiny,
-    frame=single,
-    captionpos=b,
+
+\lstdefinelanguage{vim}{
+    keywords={function, endfunction, if, endif, let, set, call, return, elseif},
     keywordstyle=\color{blue}\bfseries,
-    language=yaml
+    sensitive=true,
+    morecomment=[l]{\"},   % single-line comments
+    morestring=[b]',       % strings in single quotes
+    morestring=[b]"        % strings in double quotes
 }
+
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize, % Smaller font for code
+    frame=lines, % Adds a frame around the code
+    backgroundcolor=\color{white}, % Background color for the code block
+    rulecolor=\color{black}, % Border color
+    tabsize=2, % Default tab size
+    showspaces=false, % Do not show spaces in the code
+    showstringspaces=false, % Do not mark spaces in strings
+    showtabs=false, % Do not show tabs
+    breaklines=true, % Break long lines
+    breakatwhitespace=true % Only break lines at white spaces
+}
+
 
 \setlength{\headheight}{15pt}
 \pagestyle{fancy}

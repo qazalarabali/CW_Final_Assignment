@@ -13,7 +13,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Compile LaTeX Document
+      - name: Compile LaTeX Document (First Run)
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: CW_Final_Assignment.tex
+
+      - name: Compile LaTeX Document (Second Run)
         uses: xu-cheng/latex-action@v2
         with:
           root_file: CW_Final_Assignment.tex
