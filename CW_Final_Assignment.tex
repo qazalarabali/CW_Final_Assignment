@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
-\usepackage{listings} % Added for code highlighting
+\usepackage{listings} 
 \usepackage{xcolor}
 
 \lstdefinelanguage{yaml}{
@@ -39,6 +39,18 @@
     commentstyle=\color{green}\itshape,
     morestring=[b]",       
     morestring=[b]'        
+}
+
+\lstdefinelanguage{bash}{
+    keywords={if, then, else, elif, fi, for, while, do, done, case, esac, function},
+    keywordstyle=\color{blue}\bfseries,
+    ndkeywords={echo, exit, read, printf, cd, pwd, mkdir, rm, touch, cp, mv},
+    ndkeywordstyle=\color{teal}\bfseries,
+    sensitive=true,
+    morecomment=[l]{\#},   
+    commentstyle=\color{green}\itshape,
+    morestring=[b]",       
+    morestring=[b]'
 }
 
 
@@ -289,6 +301,8 @@ For significant updates or final versions, the LaTeX document is compiled, and t
         \end{lstlisting}
     \end{itemize}
 
+
+
     \subsection{Memory profiling}
         \subsubsection{Memory Leak}
 
@@ -317,7 +331,85 @@ For significant updates or final versions, the LaTeX document is compiled, and t
                 \item Use memory profiling tools, such as \textbf{Valgrind}, to identify and fix leaks.
                 \item Adopt good coding practices, such as using smart pointers in modern C++.
             \end{itemize}
+
+
+
+
         \subsubsection{Memory profilers}
+
+            \textbf{Valgrind : Purpose and How It Helps with Memory Leaks}
+            
+            Valgrind is a powerful instrumentation framework for building dynamic analysis tools. The most commonly used tool within the Valgrind suite is \textbf{Memcheck}, which helps detect memory-related issues in programs, such as memory leaks, use of uninitialized memory, and accessing invalid memory locations.
+            
+            \paragraph{Purpose of Valgrind}
+            
+            The primary purpose of Valgrind is to ensure memory correctness in programs by :
+            \begin{itemize}
+                \item Detecting memory leaks that occur when dynamically allocated memory is not properly freed.
+                \item Identifying invalid memory accesses, such as reading or writing outside the bounds of an array.
+                \item Detecting the use of uninitialized memory, which can lead to unpredictable behavior.
+                \item Helping developers understand and debug complex memory issues.
+            \end{itemize}
+            
+            \paragraph{How Valgrind Helps with Memory Leaks}
+            
+            Valgrind identifies memory leaks by monitoring all dynamic memory allocations and deallocations. At the end of the program's execution, it reports:
+            \begin{itemize}
+                \item \textbf{Definite Leaks} : Memory that was allocated but never freed.
+                \item \textbf{Indirect Leaks} : Memory that is still reachable through pointers but was not explicitly freed.
+                \item \textbf{Suppressed Errors} : Issues that are configured to be ignored.
+            \end{itemize}
+            
+            Using Valgrind, developers can pinpoint the exact location in the code where memory issues occur, making it easier to fix the problem.
+            
+            \paragraph{Example Usage of Valgrind}
+            
+            Below is an example of how to use Valgrind to detect memory leaks in a C program :
+            
+            \begin{lstlisting}[language=C]
+            #include <stdlib.h>
+            #include <stdio.h>
+            
+            int main() {
+                int *array = (int *)malloc(10 * sizeof(int)); // Allocate memory
+                array[0] = 42; // Use the memory
+                // Memory is not freed intentionally
+                return 0;
+            }
+            \end{lstlisting}
+            
+            To run the program with Valgrind :
+            
+            \begin{lstlisting}[language=bash]
+            valgrind --leak-check=full --track-origins=yes ./my_program
+            \end{lstlisting}
+            
+            Example output :
+            
+            \begin{lstlisting}
+                ==12345== Memcheck, a memory error detector
+                ==12345== LEAK SUMMARY:
+                ==12345==    definitely lost: 40 bytes in 1 blocks
+                ==12345==    indirectly lost: 0 bytes in 0 blocks
+                ==12345==    possibly lost: 0 bytes in 0 blocks
+                ==12345==    still reachable: 0 bytes in 0 blocks
+                ==12345==         suppressed: 0 bytes in 0 blocks
+            \end{lstlisting}
+            
+            \paragraph{Benefits of Using Valgrind}
+            \begin{itemize}
+                \item Simplifies debugging of memory-related issues.
+                \item Provides detailed error reports for quicker resolution.
+                \item Helps improve the stability and performance of software by ensuring proper memory management.
+            \end{itemize}
+            
+            \paragraph{Best Practices When Using Valgrind}
+            \begin{itemize}
+                \item Compile programs with debugging symbols (\texttt{-g} flag) for detailed reports.
+                \item Regularly run Valgrind during development to catch issues early.
+                \item Suppress known or irrelevant errors using suppression files.
+            \end{itemize}
+            
 
     \subsection{GNU/Linux Bash Scripting}
         \subsubsection{fzf}
