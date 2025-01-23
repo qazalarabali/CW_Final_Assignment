@@ -46,33 +46,33 @@
 \section{Git and GitHub}
     \subsection{Repository Initialization and Commits}
     
-To initialize the repository and make the first commits, the following steps were taken:
+To initialize the repository and make the first commits, the following steps were taken :
 
 \begin{enumerate}
-    \item Logged into \textbf{GitHub} and created a new repository named:
+    \item Logged into \textbf{GitHub} and created a new repository named :
     \begin{verbatim}
     CW_Final_Assignment
     \end{verbatim}
 
-    \item Configured the repository settings:
+    \item Configured the repository settings :
     \begin{itemize}
         \item Set the repository visibility to \textbf{Public}.
         \item Checked the box: \texttt{Initialize this repository with a README}.
     \end{itemize}
 
-    \item Cloned the repository to the local system using the command:
+    \item Cloned the repository to the local system using the command :
     \begin{verbatim}
     git clone https://github.com/username/CW_Final_Assignment
     \end{verbatim}
 
-    \item Navigated to the cloned repository directory:
+    \item Navigated to the cloned repository directory :
     \begin{verbatim}
     cd CW_Final_Assignment
     \end{verbatim}
 
     \item Created a new LaTeX file named \texttt{CW\_Final\_Assignment.tex} with the initial structure.
 
-    \item Staged and committed the new file:
+    \item Staged and committed the new file :
     \begin{itemize}
         \item To stage the file:
         \begin{verbatim}
@@ -84,13 +84,112 @@ To initialize the repository and make the first commits, the following steps wer
         \end{verbatim}
     \end{itemize}
 
-    \item Pushed the changes to the GitHub repository:
+    \item Pushed the changes to the GitHub repository :
     \begin{verbatim}
     git push
     \end{verbatim}
 \end{enumerate}
 
     \subsection{GitHub Actions for LaTeX Compilation}
+    To streamline the process of compiling the LaTeX document and managing different stages of updates, two distinct GitHub Actions workflows were created:
+
+    \begin{itemize}
+        \item \textbf{Workflow for Intermediate Versions:}
+        This workflow compiles the LaTeX document and uploads the resulting PDF as an \textbf{Artifact}. It is used for minor updates or ongoing progress, ensuring the document is accessible for review without cluttering the Releases section.
+    
+        \item \textbf{Workflow for Major Releases:}
+        This workflow compiles the LaTeX document and publishes the resulting PDF as part of a \textbf{GitHub Release}. It is triggered only for significant updates or finalized versions to provide stable releases for public access.
+    \end{itemize}
+
+    \subsubsection{Workflow for Intermediate Versions (Artifact Only)}
+
+For intermediate updates or minor progress, the LaTeX document is compiled and uploaded as an \textbf{Artifact}. This ensures that ongoing work is accessible for review and testing without cluttering the Releases section.
+
+\begin{enumerate}
+    \item \textbf{Trigger:} This workflow runs on every \texttt{push} to the \texttt{main} branch.
+    \item \textbf{Outcome:} The compiled PDF is stored in the \textbf{Actions > Artifacts} section for download.
+    \item \textbf{Workflow Configuration:}
+    \begin{verbatim}
+    name: Compile LaTeX and Upload Artifact
+
+    on:
+      push:
+        branches:
+          - main
+
+    jobs:
+      build_latex:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v3
+
+          - name: Compile LaTeX Document
+            uses: xu-cheng/latex-action@v2
+            with:
+              root_file: CW_Final_Assignment.tex
+
+          - name: Upload Compiled PDF as Artifact
+            uses: actions/upload-artifact@v3
+            with:
+              name: CW_Final_Assignment
+              path: ./CW_Final_Assignment.pdf
+    \end{verbatim}
+\end{enumerate}
+
+\subsubsection{Workflow for Major Releases}
+
+For significant updates or final versions, the LaTeX document is compiled, and the resulting PDF is published as part of a \textbf{GitHub Release}. This approach ensures that only stable and finalized versions are available in the Releases section.
+
+\begin{enumerate}
+    \item \textbf{Trigger:} This workflow runs on every \texttt{push} of a Git tag in the format \texttt{x.x.x} (e.g., \texttt{1.0.0}).
+    \item \textbf{Outcome:} The compiled PDF is attached to a new Release in the \textbf{Releases} section.
+    \item \textbf{Workflow Configuration:}
+    \begin{verbatim}
+    name: Release Compiled PDF
+
+    on:
+      push:
+        tags:
+          - '*.*.*'
+
+    jobs:
+      build_latex:
+        permissions: write-all
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v3
+
+          - name: Compile LaTeX Document
+            uses: xu-cheng/latex-action@v2
+            with:
+              root_file: CW_Final_Assignment.tex
+
+          - name: Create Release
+            id: create_release
+            uses: actions/create-release@v1
+            env:
+              GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+            with:
+              tag_name: \${{ github.ref }}
+              release_name: Release \${{ github.ref }}
+              draft: false
+              prerelease: false
+
+          - name: Upload Release Asset
+            id: upload_release_asset
+            uses: actions/upload-release-asset@v1
+            env:
+              GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+            with:
+              upload_url: \${{ steps.create_release.outputs.upload_url }}
+              asset_path: ./CW_Final_Assignment.pdf
+              asset_name: CW_Final_Assignment.pdf
+              asset_content_type: application/pdf
+    \end{verbatim}
+\end{enumerate}
+    
 
 \section{Exploration Tasks}
     \subsection{Vim Advanced Features}
