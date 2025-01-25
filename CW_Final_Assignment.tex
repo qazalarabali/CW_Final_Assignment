@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{listings} 
+\usepackage{float}
 \usepackage{xcolor}
 
 \lstdefinelanguage{yaml}{
@@ -459,12 +460,12 @@ For significant updates or final versions, the LaTeX document is compiled, and t
 
             \textbf{Result of Installation :}
 
-            \begin{figure}[h!]
+            \begin{figure}[H]
                 \centering
                 \includegraphics[width=\textwidth]{assets/pictures/installation_of_fzf.png}
                 \caption{Successful installation of \texttt{fzf}.}
             \end{figure}
-
+            
             \textbf{Explanation of \texttt{ls | fzf} :}
 
             This command integrates the output of \texttt{ls} with the fuzzy finder tool, \texttt{fzf}, to dynamically and interactively search for files or directories. Here's how it works:
@@ -475,7 +476,7 @@ For significant updates or final versions, the LaTeX document is compiled, and t
                 \item \texttt{fzf} filters the results interactively and highlights the matching entries.
             \end{enumerate}
 
-            \textbf{Demonstration of \texttt{ls | fzf}:}
+            \textbf{Demonstration of \texttt{ls | fzf} :}
 
             \begin{figure}[h!]
                 \centering
@@ -483,7 +484,7 @@ For significant updates or final versions, the LaTeX document is compiled, and t
                 \caption{Interactive filtering of files and directories using \texttt{fzf}.}
             \end{figure}
 
-            \textbf{Benefits of \texttt{ls | fzf}:}
+            \textbf{Benefits of \texttt{ls | fzf} :}
             \begin{itemize}
                 \item Simplifies navigation in large directories.
                 \item Reduces time spent searching for files manually.
@@ -491,8 +492,46 @@ For significant updates or final versions, the LaTeX document is compiled, and t
             \end{itemize}
 
             
-        \subsubsection{Using fzf to find your favorite PDF}
-        \subsubsection{Opening the file using Zathura}
+            \subsubsection{Using \texttt{fzf} to Find Your Favorite PDF}
+
+                You might have come across moments when you want to open up a certain PDF when studying for your final exams but finding the directory of that PDF is a very tiresome process. In this section, we will be using \texttt{fzf} to find our PDF in seconds! We will go step-by-step on how to find your file and use \texttt{fzf} to select it.
+                
+                \begin{enumerate}
+                    \item First, we list the directory of all the files with the extension \texttt{.pdf}. The following command was used:
+                    \begin{lstlisting}[language=bash]
+                    fd -e pdf
+                    \end{lstlisting}
+                    \item Next, we used \texttt{fzf} to filter and select the desired PDF interactively. Here’s the command:
+                    \begin{lstlisting}[language=bash]
+                    fd -e pdf | fzf
+                    \end{lstlisting}
+                \end{enumerate}
+                
+                \textbf{Results :}
+                
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\textwidth]{assets/pictures/find_desired_pdf.png}
+                    \caption{Interactive filtering to find desired PDF \texttt{fzf}.}
+                \end{figure}
+                
+            \subsubsection{Opening the File Using Zathura}
+                
+                Once we selected the desired PDF file, we used the minimalist program \texttt{Zathura} to open it. Here’s the command that accomplishes this:
+                
+                \begin{lstlisting}[language=bash]
+                zathura $(fd -e pdf | fzf)
+                \end{lstlisting}
+                
+                \textbf{Results :}
+                
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\textwidth]{assets/pictures/find_and_open_desired_pdf.png}
+                    \caption{Opening the selected PDF file using \texttt{Zathura}.}
+                \end{figure}
+            
+
 
 \section{Git and FOSS}
     \subsection{README.md}
