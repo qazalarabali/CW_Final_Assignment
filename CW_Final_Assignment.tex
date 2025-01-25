@@ -434,6 +434,62 @@ For significant updates or final versions, the LaTeX document is compiled, and t
                 \item Can be used in combination with pipes for filtering outputs.
                 \item Lightweight and customizable with various options.
             \end{itemize}
+
+
+            \textbf{Install fzf and Explanation of \texttt{ls | fzf}}
+
+            To install \texttt{fzf} on the system, the following steps were taken :
+
+            \begin{enumerate}
+                \item Updated the package list :
+                \begin{lstlisting}[language=bash]
+                sudo apt update
+                \end{lstlisting}
+
+                \item Installed \texttt{fzf} using the \texttt{apt} package manager :
+                \begin{lstlisting}[language=bash]
+                sudo apt install fzf
+                \end{lstlisting}
+
+                \item Verified the installation by checking the version :
+                \begin{lstlisting}[language=bash]
+                fzf --version
+                \end{lstlisting}
+            \end{enumerate}
+
+            \textbf{Result of Installation :}
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=\textwidth]{assets/images/installation_of_fzf.png}
+                \caption{Successful installation of \texttt{fzf}.}
+            \end{figure}
+
+            \textbf{Explanation of \texttt{ls | fzf} :}
+
+            This command integrates the output of \texttt{ls} with the fuzzy finder tool, \texttt{fzf}, to dynamically and interactively search for files or directories. Here's how it works:
+
+            \begin{enumerate}
+                \item \texttt{ls} lists all files and directories in the current folder.
+                \item The output is piped to \texttt{fzf}, which allows the user to type part of a file or directory name.
+                \item \texttt{fzf} filters the results interactively and highlights the matching entries.
+            \end{enumerate}
+
+            \textbf{Demonstration of \texttt{ls | fzf}:}
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=\textwidth]{assets/images/filtering_using_fzf.png}
+                \caption{Interactive filtering of files and directories using \texttt{fzf}.}
+            \end{figure}
+
+            \textbf{Benefits of \texttt{ls | fzf}:}
+            \begin{itemize}
+                \item Simplifies navigation in large directories.
+                \item Reduces time spent searching for files manually.
+                \item Provides a responsive and interactive experience.
+            \end{itemize}
+
             
         \subsubsection{Using fzf to find your favorite PDF}
         \subsubsection{Opening the file using Zathura}
